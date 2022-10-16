@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using CMS.Core.Dtos;
+using CMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,9 @@ namespace CMS.Infrastructure.AutoMapper
 {
     public class MapperProfile : Profile
     {
+        public MapperProfile(){
+            
+        }
 
     }
 }

@@ -1,0 +1,3 @@
+﻿
+to use file service install Microsoft.AspNetCore.Hosting library and put thin in project 
+<PackageReference Include="Microsoft.AspNetCore.App" />

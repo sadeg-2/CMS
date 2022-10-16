@@ -12,6 +12,8 @@ namespace CMS.Web.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.UserType = "Administrator";
+            ViewBag.fullName = "Sadeg Ashour ";
             return View();
         }
     
