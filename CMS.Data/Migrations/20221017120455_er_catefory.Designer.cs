@@ -4,14 +4,16 @@ using CMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CMS.Data.Migrations
 {
     [DbContext(typeof(CMSDbContext))]
-    partial class CMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221017120455_er_catefory")]
+    partial class er_catefory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,7 +71,7 @@ namespace CMS.Data.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Advertisements");
+                    b.ToTable("Advertisement");
                 });
 
             modelBuilder.Entity("CMS.Data.Models.Category", b =>
@@ -100,34 +102,7 @@ namespace CMS.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("CMS.Data.Models.ContentChangeLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("ChangeAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ContentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("New")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Old")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ContentChangeLogs");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("CMS.Data.Models.Email", b =>
@@ -155,7 +130,7 @@ namespace CMS.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Emails");
+                    b.ToTable("Email");
                 });
 
             modelBuilder.Entity("CMS.Data.Models.Notification", b =>
@@ -189,7 +164,7 @@ namespace CMS.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notification");
                 });
 
             modelBuilder.Entity("CMS.Data.Models.Post", b =>
@@ -240,7 +215,7 @@ namespace CMS.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Post");
                 });
 
             modelBuilder.Entity("CMS.Data.Models.PostAttachment", b =>
@@ -261,7 +236,7 @@ namespace CMS.Data.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("PostAttachments");
+                    b.ToTable("PostAttachment");
                 });
 
             modelBuilder.Entity("CMS.Data.Models.Track", b =>
@@ -301,7 +276,7 @@ namespace CMS.Data.Migrations
 
                     b.HasIndex("PublishedById");
 
-                    b.ToTable("Tracks");
+                    b.ToTable("Track");
                 });
 
             modelBuilder.Entity("CMS.Data.Models.User", b =>

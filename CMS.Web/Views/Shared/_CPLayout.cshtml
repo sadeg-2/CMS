@@ -78,7 +78,7 @@
     </div>
     <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
         <a href="/">
-            <img alt="Logo" width="65%" src="~/ThemImages/cms-logo.png" />
+            <img alt="Logo" width="20%" src="~/ThemImages/cms-logo.png" />
         </a>
         <div class="d-flex align-items-center">
             <button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
@@ -122,7 +122,8 @@
                 <div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
                     <div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500">
                         <ul class="menu-nav">
-                            @if (ViewBag.UserType == "Administrator")
+                            @if(true) 
+                            //(ViewBag.UserType == "Administrator")
                             {
                                 <li class="menu-item menu-item-active" aria-haspopup="true">
                                     <a href="~/Home/Index" class="menu-link">

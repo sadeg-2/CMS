@@ -3,18 +3,19 @@ using CMS.Core.Constants;
 using CMS.Core.Dtos;
 using CMS.Core.Exceptions;
 using CMS.Core.ViewModels;
+using CMS.Data;
 using CMS.Data.Models;
-using CMS.Web.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Query = CMS.Core.Dtos.Query;
 
 namespace CMS.Infrastructure.Services.Users
 {
-    internal class UserService
+    public class UserService : IUserService
     {
         private readonly CMSDbContext _db;
         private readonly IMapper _mapper;
@@ -29,12 +30,30 @@ namespace CMS.Infrastructure.Services.Users
             _fileService = fileService;
             _emailService = emailService;
         }
-
-        public async Task<List<UserViewModel>> GetAll()
+        public async Task<ResponseDto> GetAll(Pagination pagination, Query query)
         {
-            var users = await _db.Users.Where(x => !x.IsDelete).ToListAsync();
-
-            return _mapper.Map<List<UserViewModel>>(users);
+            var queryString = _db.Users.Where(x => !x.IsDelete && (x.FullName.Contains(query.GeneralSearch) 
+                                                                || string.IsNullOrWhiteSpace(query.GeneralSearch) 
+                                                                || x.Email.Contains(query.GeneralSearch) 
+                                                                || x.PhoneNumber.Contains(query.GeneralSearch))).AsQueryable();
+            
+            var dataCount = queryString.Count();
+            var skipValue = pagination.GetSkipValue();
+            var dataList =  queryString.ToList().Skip(skipValue).Take(pagination.PerPage);
+            var users = _mapper.Map<List<UserViewModel>>(dataList);
+            var pages = pagination.GetPages(dataCount);
+            var result = new ResponseDto
+            {
+                data = users,
+                meta = new Meta
+                {
+                    page = pagination.Page,
+                    perpage = pagination.PerPage,
+                    pages = pages,
+                    total = dataCount,
+                }
+            };
+            return result;
         }
 
 
@@ -53,9 +72,9 @@ namespace CMS.Infrastructure.Services.Users
             return user.Id;
         }
 
-        public async Task<string> Create(UserDto dto)
+        public async Task<string> Create(CreateUserDto dto)
         {
-            var emailOrPhoneIsExit = await _db.Users.AnyAsync(x => !x.IsDelete && (x.Email != dto.Email || x.PhoneNumber != dto.PhoneNumber));
+            var emailOrPhoneIsExit = await _db.Users.AnyAsync(x => !x.IsDelete && (x.Email == dto.Email || x.PhoneNumber == dto.PhoneNumber));
             if (emailOrPhoneIsExit)
             {
                 throw new DuplicateEmailOrPhoneException();
@@ -78,15 +97,15 @@ namespace CMS.Infrastructure.Services.Users
             return user.Id;
 
         }
-        public async Task<string> Update(UserDto dto)
+        public async Task<string> Update(UpdateUserDto dto)
         {
-            var emailOrPhoneIsExit = await _db.Users.AnyAsync(x => !x.IsDelete && (x.Email != dto.Email || x.PhoneNumber != dto.PhoneNumber) && x.Id != dto.Id);
+            var emailOrPhoneIsExit = await _db.Users.AnyAsync(x => !x.IsDelete && (x.Email == dto.Email || x.PhoneNumber == dto.PhoneNumber) && x.Id != dto.Id);
             if (emailOrPhoneIsExit)
             {
                 throw new DuplicateEmailOrPhoneException();
             }
             var user = await _db.Users.FindAsync(dto.Id);
-            var updatedUSer = _mapper.Map<UserDto,User>(dto,user);
+            var updatedUSer = _mapper.Map<UpdateUserDto, User>(dto,user);
 
             if (dto.Image != null)
             {
@@ -96,6 +115,16 @@ namespace CMS.Infrastructure.Services.Users
             await _db.SaveChangesAsync();
             return user.Id;
 
+        }
+
+        public async Task<UpdateUserDto> Get(string Id)
+        {
+            var user = await _db.Users.SingleOrDefaultAsync(x => x.Id == Id && !x.IsDelete);
+            if (user == null)
+            {
+                throw new EntityNotFoundException();
+            }
+            return _mapper.Map<UpdateUserDto>(user);
         }
         private string GeneratePassword()
         {

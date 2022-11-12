@@ -1,17 +1,17 @@
-using CMS.Web.Data;
+using CMS.Data;
+using CMS.Data.Models;
+using CMS.Infrastructure.AutoMapper;
+using CMS.Infrastructure.Middlewares;
+using CMS.Infrastructure.Services;
+using CMS.Infrastructure.Services.Categories;
+using CMS.Infrastructure.Services.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CMS.Web
 {
@@ -32,9 +32,34 @@ namespace CMS.Web
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<User, IdentityRole>(
+                config => {
+                    config.SignIn.RequireConfirmedAccount = true;
+                    config.User.RequireUniqueEmail = true;
+                    config.Password.RequireDigit = false;
+                    config.Password.RequiredLength = 6;
+                    config.Password.RequireLowercase = false;
+                    config.Password.RequireNonAlphanumeric = false;
+                    config.Password.RequireUppercase = false;
+                    config.SignIn.RequireConfirmedEmail = false;
+
+                })
                 .AddEntityFrameworkStores<CMSDbContext>();
+            
+            services.AddRazorPages();
+            
             services.AddControllersWithViews();
+
+            // one object to all project
+            services.AddTransient<IFileService,FileService>();
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddAutoMapper(typeof(MapperProfile).Assembly);
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +78,10 @@ namespace CMS.Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+
+            app.UseExceptionHandler(op => op.UseMiddleware<ExceptionHandler>());
+
 
             app.UseRouting();
 

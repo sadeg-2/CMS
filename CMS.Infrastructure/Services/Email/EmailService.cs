@@ -11,11 +11,10 @@ namespace CMS.Infrastructure.Services
     public class EmailService : IEmailService
     {
         public async Task Send(string to, string subject, string body)
-        {
-            // create message
+        {            // create message
             var message = new MailMessage();
 
-            message.From = new MailAddress("csharpp0@gmail.com", "Product App");
+            message.From = new MailAddress("csharpp0@gmail.com", "CMS App");
             message.Subject = subject;
             message.Body = body;
             message.To.Add(new MailAddress(to)); 
