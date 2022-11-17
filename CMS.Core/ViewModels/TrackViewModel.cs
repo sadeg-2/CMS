@@ -6,26 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMS.Data.Models
+namespace CMS.Core.ViewModels
 {
-    public class Track : BaseEntity
+    public class TrackViewModel
     {
         public int Id { get; set; }
-        [Required]
         public string Title { get; set; }
         public int TimeInMinute { get; set; }
-        [Required]
         public string TrackUrl { get; set; }
-        [Required]
         public string OwnerName { get; set; }
-        
-         public int CategoryId { get; set; }
-        public Category Category { get; set; }
-
-        public ContentStatus Status { get; set; }
-
-        public string PublishedById { get; set; }
-        public User PublishedBy { get; set; }
+        public CategoryViewModel Category { get; set; }
+        public UserViewModel PublishedBy { get; set; }
+        public string Status { get; set; }
+        public string CreatedAt { get; set; }
 
 
     }

@@ -35,7 +35,10 @@ namespace CMS.Infrastructure.AutoMapper
                 ForMember(x => x.ImageUrl, x => x.Ignore()).ForMember(x => x.Owner, x => x.Ignore());
             CreateMap<Advertisement, UpdateAdvertisementDto>().ForMember(x => x.Image, x => x.Ignore());
 
-
+            CreateMap<Track, TrackViewModel>().ForMember(x => x.CreatedAt, x => x.MapFrom(x => x.CreatedAt.ToString("yyyy:MM:dd")));
+            CreateMap<CreateTrackDto, Track>().ForMember(x => x.TrackUrl, x => x.Ignore());
+            CreateMap<UpdateTrackDto, Track>().ForMember(x => x.TrackUrl, x => x.Ignore());
+            CreateMap<Track, UpdateTrackDto>().ForMember(x => x.Track, x => x.Ignore());
 
 
         }
