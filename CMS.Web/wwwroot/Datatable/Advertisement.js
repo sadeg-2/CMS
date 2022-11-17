@@ -120,23 +120,23 @@ jQuery(document).ready(function () {
     KTDatatableAutoColumnHideDemo.init();
 });
 
-$('#excelBtn').on('click', function () {
-    $.post('level/ExportToExcel', {
-        generalSearch: $('#kt_datatable_search_query').val().toLowerCase()
-    },
-        function (returnedData) {
-            var today = new Date();
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            var yyyy = today.getFullYear();
+//$('#excelBtn').on('click', function () {
+//    $.post('level/ExportToExcel', {
+//        generalSearch: $('#kt_datatable_search_query').val().toLowerCase()
+//    },
+//        function (returnedData) {
+//            var today = new Date();
+//            var dd = String(today.getDate()).padStart(2, '0');
+//            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+//            var yyyy = today.getFullYear();
 
-            today = mm + '/' + dd + '/' + yyyy;
+//            today = mm + '/' + dd + '/' + yyyy;
 
-            var a = document.createElement('a');
-            a.href = returnedData;
-            a.download = today + '-report.xlsx';
-            document.body.append(a);
-            a.click();
-            a.remove();
-        });
-});
+//            var a = document.createElement('a');
+//            a.href = returnedData;
+//            a.download = today + '-report.xlsx';
+//            document.body.append(a);
+//            a.click();
+//            a.remove();
+//        });
+//});

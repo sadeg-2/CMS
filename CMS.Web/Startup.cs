@@ -3,6 +3,7 @@ using CMS.Data.Models;
 using CMS.Infrastructure.AutoMapper;
 using CMS.Infrastructure.Middlewares;
 using CMS.Infrastructure.Services;
+using CMS.Infrastructure.Services.Advertisements;
 using CMS.Infrastructure.Services.Categories;
 using CMS.Infrastructure.Services.Users;
 using Microsoft.AspNetCore.Builder;
@@ -55,6 +56,8 @@ namespace CMS.Web
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IAdvertisementService, AdvertisementService>();
+
             services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
 
