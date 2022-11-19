@@ -113,8 +113,6 @@ var KTDatatableAutoColumnHideDemo = function () {
 </svg ></span > </a> ';
                     
                       
-
-
                     if (data.status == 'Pending') {
                         buttons = buttons +
                             '<a href="/Post/UpdateStatus/' + data.id + '?status=2" tname="#kt_datatable" class="Confirm btn btn-sm btn-clean btn-icon" title="موافقة" >\
