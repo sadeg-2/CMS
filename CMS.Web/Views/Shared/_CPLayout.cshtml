@@ -1,7 +1,7 @@
 ﻿@{
-    ViewBag.UserType = "Administrator";
-            //ViewBag.fullName = "Sadeg Ashour";
-    ViewBag.fullName = "Sadeg Ashour";
+    //ViewBag.UserType = "Administrator";
+    //        //ViewBag.fullName = "Sadeg Ashour";
+    //ViewBag.fullName = "Sadeg Ashour";
             
 }
 <html lang="en" direction="rtl" style="direction: rtl;">
@@ -127,8 +127,7 @@
                 <div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
                     <div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500">
                         <ul class="menu-nav">
-                            @if(true) 
-                            //(ViewBag.UserType == "Administrator")
+                            @if(ViewBag.UserType == "Administrator")
                             {
                                 <li class="menu-item menu-item-active" aria-haspopup="true">
                                     <a href="~/Home/Index" class="menu-link">
@@ -290,7 +289,6 @@
                                         <span class="menu-text"> ادارة التسجيلات </span>
                                     </a>
                                 </li>
-
 
                             }
                         </ul>

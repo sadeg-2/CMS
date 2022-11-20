@@ -81,7 +81,15 @@ namespace CMS.Infrastructure.Services.Users
 
             return user.Id;
         }
-
+        public UserViewModel GetUserByUsername(string username)
+        {
+            var user = _db.Users.SingleOrDefault(x => x.UserName == username && !x.IsDelete);
+            if (user == null)
+            {
+                throw new EntityNotFoundException();
+            }
+            return _mapper.Map<UserViewModel>(user);
+        }
         public async Task<string> Create(CreateUserDto dto)
         {
             var emailOrPhoneIsExit = await _db.Users.AnyAsync(x => !x.IsDelete && (x.Email == dto.Email || x.PhoneNumber == dto.PhoneNumber));
