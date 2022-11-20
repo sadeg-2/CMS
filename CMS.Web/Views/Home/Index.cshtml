@@ -1,9 +1,226 @@
-﻿@{
+﻿
+@model DashboardViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="row">
-    <></>
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h1 class="card-label">
+                احصائيات
+            </h1>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="alert alert-info">
+                         <h3>عدد المستخدمين</h3>
+                         <h3>@Model.NumberOfUsers</h3>
+                    </div>
+                   
 
+                </div>
+                <div class="col-md-3">
+                    <div class="alert alert-info">
+                        <h3>عدد الاخبار </h3>
+                        <h3>@Model.NumberOfPost</h3>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="alert alert-info">
+                        <h3>عدد التسجيلات </h3>
+                        <h3>@Model.NumberOfTrack</h3>
 
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="alert alert-info">
+                        <h3>عدد الاعلانات</h3>
+                        <h3>@Model.NumberOfAdvertisement</h3>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <hr />
+
+        <div class="row">
+            <div class="col-md-6">
+                <h3> توزيع المستخدمين بالنسبة لنوع المستخدم</h3>
+                <canvas id="userTypeChart" width="400" height="400"></canvas>
+            </div>
+            <div class="col-md-6">
+                <h3> توزيع المحتوى بالنسبة لنوعه </h3>
+                <canvas id="contentTypeChart" width="400" height="400"></canvas>
+            </div>            
+        </div>
+
+        <br />
+        <hr />
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3> توزيع المحتوى بالنسبة للشهور </h3>
+                <canvas id="contentByMonthChart"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+     
+
+    <script>
+        const userTypeCanvas = document.getElementById('userTypeChart');
+        const contentTypeCanvas = document.getElementById('contentTypeChart');
+        const contentByMonthCanvas = document.getElementById('contentByMonthChart');
+
+
+
+        var userTypeValue = [];
+        var userTypeLabels = [];
+        var userTypeColors = [];
+
+        var contentTypeValue = [];
+        var contentTypeLabels = [];
+        var contentTypeColors = [];
+
+        var contentByMonthValue = [];
+        var contentByMonthLabels = [];
+        var contentByMonthColors = [];
+
+        $.ajax({
+            url: "/home/GetContentByMonthChartData", success: function (result) {
+
+                $(result).each(function (index, d) {
+                    console.log(result[index], "Item");
+                    contentByMonthValue.push(result[index].value);
+                    contentByMonthLabels.push(result[index].key);
+                    contentByMonthColors.push(result[index].color);
+
+                })
+
+                var usertypeChart = new Chart(contentByMonthCanvas, {
+                    type: 'bar',
+                    data: {
+                        labels: contentByMonthLabels,
+                        datasets: [
+                            {
+                                label: '# of Votes',
+                                data: contentByMonthValue,
+                                borderWidth: 1,
+                                backgroundColor: contentByMonthColors,
+                                borderColor: [
+                                    'rgba(255,90,30,1)',
+                                    'rgba(255,10,30,1)',
+                                    'rgba(25,80,60,1)',
+                                    'rgba(150,100,200,1)',
+                                ]
+                            }]
+                    },
+                    options: {
+                        //scales: {
+                        //  y: {
+                        //    beginAtZero: true
+                        //  }
+                        //}
+                    }
+                });
+
+            }
+        });
+
+        $.ajax({
+            url: "/home/GetUserTypeChartData", success: function (result) {
+               
+                $(result).each(function (index, d) {
+                    console.log(result[index],"Item");
+                    userTypeValue.push(result[index].value);
+                    userTypeLabels.push(result[index].key);
+                    userTypeColors.push(result[index].color);
+
+                })
+
+                var usertypeChart = new Chart(userTypeCanvas, {
+                    type: 'pie',
+                    data: {
+                        labels: userTypeLabels,
+                        datasets: [
+                            {
+                                label: '# of Votes',
+                                data: userTypeValue,
+                                borderWidth: 1,
+                                backgroundColor: userTypeColors,
+                                borderColor: [
+                                    'rgba(255,90,30,1)',
+                                    'rgba(255,10,30,1)',
+                                    'rgba(25,80,60,1)',
+                                    'rgba(150,100,200,1)',
+                                ]
+                            }]
+                    },
+                    options: {
+                        //scales: {
+                        //  y: {
+                        //    beginAtZero: true
+                        //  }
+                        //}
+                    }
+                });
+
+            }});
+
+        $.ajax({
+            url: "/home/GetContentTypeChartData", success: function (result) {
+
+                $(result).each(function (index, d) {
+                    console.log(result[index], "Item");
+                    contentTypeValue.push(result[index].value);
+                    contentTypeLabels.push(result[index].key);
+                    contentTypeColors.push(result[index].color);
+
+                })
+
+                var contentTypeChart = new Chart(contentTypeCanvas, {
+                    type: 'pie',
+                    data: {
+                        labels: contentTypeLabels,
+                        datasets: [
+                            {
+                                label: '# of Votes',
+                                data: contentTypeValue,
+                                borderWidth: 1,
+                                backgroundColor: contentTypeColors,
+                                borderColor: [
+                                    'rgba(255,90,30,1)',
+                                    'rgba(255,10,30,1)',
+                                    'rgba(25,80,60,1)',
+                                    'rgba(150,100,200,1)',
+                                ]
+                            }]
+                    },
+                    options: {
+                        //scales: {
+                        //  y: {
+                        //    beginAtZero: true
+                        //  }
+                        //}
+                    }
+                });
+
+            }
+        });
+      
+    </script>
+
+}

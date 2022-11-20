@@ -23,7 +23,10 @@ namespace CMS.Data.Models
         public string AuthorId { get; set; }
         public User Author { get; set; }
         public List<PostAttachment> Attachments { get; set; }
-
+        public Post()
+        {
+            Status = ContentStatus.Pending;
+        }
 
     }
 }

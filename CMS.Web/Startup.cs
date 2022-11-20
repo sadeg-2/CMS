@@ -5,6 +5,7 @@ using CMS.Infrastructure.Middlewares;
 using CMS.Infrastructure.Services;
 using CMS.Infrastructure.Services.Advertisements;
 using CMS.Infrastructure.Services.Categories;
+using CMS.Infrastructure.Services.Posts;
 using CMS.Infrastructure.Services.Tracks;
 using CMS.Infrastructure.Services.Users;
 using Microsoft.AspNetCore.Builder;
@@ -36,7 +37,7 @@ namespace CMS.Web
 
             services.AddIdentity<User, IdentityRole>(
                 config => {
-                    config.SignIn.RequireConfirmedAccount = true;
+                    config.SignIn.RequireConfirmedAccount = false;
                     config.User.RequireUniqueEmail = true;
                     config.Password.RequireDigit = false;
                     config.Password.RequiredLength = 6;
@@ -46,7 +47,7 @@ namespace CMS.Web
                     config.SignIn.RequireConfirmedEmail = false;
 
                 })
-                .AddEntityFrameworkStores<CMSDbContext>();
+                .AddEntityFrameworkStores<CMSDbContext>().AddDefaultUI();
             
             services.AddRazorPages();
             
@@ -59,6 +60,10 @@ namespace CMS.Web
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IAdvertisementService, AdvertisementService>();
             services.AddTransient<ITrackService, TrackService>();
+            services.AddTransient<IPostService, PostService>();
+            services.AddTransient<IDashboardService, DashboardService>();
+
+
 
             services.AddAutoMapper(typeof(MapperProfile).Assembly);
 

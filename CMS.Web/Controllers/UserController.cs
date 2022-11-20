@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CMS.Web.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
 
         private readonly IUserService _userServise;
@@ -17,7 +17,8 @@ namespace CMS.Web.Controllers
         }
         [HttpGet]
         public IActionResult Index()
-        { 
+        {
+            _userServise.g();
             return View();
         }
 

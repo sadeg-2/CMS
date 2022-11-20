@@ -26,7 +26,10 @@ namespace CMS.Data.Models
 
         public string PublishedById { get; set; }
         public User PublishedBy { get; set; }
-
-
+         
+        public Track()
+        {
+            Status = ContentStatus.Pending;
+        }
     }
 }

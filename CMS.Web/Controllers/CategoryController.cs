@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CMS.Web.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
 
         private readonly ICategoryService _categoryService;

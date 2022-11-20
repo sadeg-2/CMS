@@ -1,4 +1,6 @@
+using CMS.Data;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -13,7 +15,8 @@ namespace CMS.Web
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().SeedDb().Run();
+           
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,5 +25,7 @@ namespace CMS.Web
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+       
     }
 }

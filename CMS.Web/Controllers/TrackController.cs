@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace CMS.Web.Controllers
 {
-    public class TrackController : Controller
+    public class TrackController : BaseController
     {
 
         private readonly ITrackService _trackService;

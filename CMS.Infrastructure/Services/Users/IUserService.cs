@@ -15,6 +15,7 @@ namespace CMS.Infrastructure.Services.Users
         Task<string> Create(CreateUserDto dto);
         Task<string> Update(UpdateUserDto dto);
         Task<UpdateUserDto> Get(string Id);
-
+        Task<List<UserViewModel>> GetAuthorList();
+        public void g();
     }
 }

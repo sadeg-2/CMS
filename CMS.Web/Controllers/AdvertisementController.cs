@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CMS.Web.Controllers
 {
-    public class AdvertisementController : Controller
+    public class AdvertisementController : BaseController
     {
 
         private readonly IAdvertisementService _advertisementService;

@@ -6,6 +6,7 @@ using CMS.Core.ViewModels;
 using CMS.Data;
 using CMS.Data.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -55,6 +56,15 @@ namespace CMS.Infrastructure.Services.Users
             };
             return result;
         }
+        public void g() {
+
+
+            var user = _db.Users.SingleOrDefault(x => x.FullName == "Fuck");
+            var c = _manager.CheckPasswordAsync(user, "SadegSadeg2001");
+
+            var x = 1;
+
+        }
 
 
         public async Task<string> Delete(string id)
@@ -97,6 +107,11 @@ namespace CMS.Infrastructure.Services.Users
             return user.Id;
 
         }
+        public async Task<List<UserViewModel>> GetAuthorList()
+        {
+            var users = await _db.Users.Where(x => !x.IsDelete && x.UserType == Core.Enums.UserType.ArticleAuthor).ToListAsync();
+            return _mapper.Map<List<UserViewModel>>(users);
+        }
         public async Task<string> Update(UpdateUserDto dto)
         {
             var emailOrPhoneIsExit = await _db.Users.AnyAsync(x => !x.IsDelete && (x.Email == dto.Email || x.PhoneNumber == dto.PhoneNumber) && x.Id != dto.Id);
@@ -128,7 +143,7 @@ namespace CMS.Infrastructure.Services.Users
         }
         private string GeneratePassword()
         {
-            return Guid.NewGuid().ToString().Substring(1, 8);
+            return Guid.NewGuid().ToString().Substring(1, 7);
 
         }
     }

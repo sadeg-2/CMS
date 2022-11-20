@@ -84,7 +84,6 @@ namespace CMS.Infrastructure.Services.Tracks
             {
                 track.TrackUrl = await _fileService.SaveFile(dto.Track, "Tracks");
             }
-           
             await _db.Tracks.AddAsync(track);
             await _db.SaveChangesAsync();
             return track.Id;
@@ -124,21 +123,21 @@ namespace CMS.Infrastructure.Services.Tracks
             {
                 throw new EntityNotFoundException();
             }
-            var changeLog = new ContentChangeLog();
-            changeLog.ContentId = track.Id;
-            changeLog.Type = ContentType.Track;
-            changeLog.Old = track.Status;
-            changeLog.New = status;
-            changeLog.ChangeAt = DateTime.Now;
+            //var changeLog = new ContentChangeLog();
+            //changeLog.ContentId = track.Id;
+            //changeLog.Type = ContentType.Track;
+            //changeLog.Old = track.Status;
+            //changeLog.New = status;
+            //changeLog.ChangeAt = DateTime.Now;
 
-            await _db.ContentChangeLogs.AddAsync(changeLog);
-            await _db.SaveChangesAsync();
+            //await _db.ContentChangeLogs.AddAsync(changeLog);
+            //await _db.SaveChangesAsync();
 
             track.Status = status;
             _db.Tracks.Update(track);
             await _db.SaveChangesAsync();
 
-            await _emailService.Send(track.PublishedBy.Email, "UPDATE Track STATUS !", $"YOUR Track NOW IS {status.ToString()}");
+           // await _emailService.Send(track.PublishedBy.Email, "UPDATE Track STATUS !", $"YOUR Track NOW IS {status.ToString()}");
 
             return track.Id;
         }
