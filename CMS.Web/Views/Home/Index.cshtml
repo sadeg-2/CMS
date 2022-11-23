@@ -103,7 +103,6 @@
             url: "/home/GetContentByMonthChartData", success: function (result) {
 
                 $(result).each(function (index, d) {
-                    console.log(result[index], "Item");
                     contentByMonthValue.push(result[index].value);
                     contentByMonthLabels.push(result[index].key);
                     contentByMonthColors.push(result[index].color);
@@ -144,7 +143,6 @@
             url: "/home/GetUserTypeChartData", success: function (result) {
                
                 $(result).each(function (index, d) {
-                    console.log(result[index],"Item");
                     userTypeValue.push(result[index].value);
                     userTypeLabels.push(result[index].key);
                     userTypeColors.push(result[index].color);
@@ -184,7 +182,6 @@
             url: "/home/GetContentTypeChartData", success: function (result) {
 
                 $(result).each(function (index, d) {
-                    console.log(result[index], "Item");
                     contentTypeValue.push(result[index].value);
                     contentTypeLabels.push(result[index].key);
                     contentTypeColors.push(result[index].color);

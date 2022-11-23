@@ -85,15 +85,15 @@ namespace CMS.Infrastructure.Services.Posts
                 throw new EntityNotFoundException();
             }
 
-            var updatedPost = _mapper.Map(dto,post);
+            var updatedPost = _mapper.Map(dto, post);
 
 
             _db.Posts.Update(updatedPost);
             await _db.SaveChangesAsync();
 
-            if (dto.PostAttachments != null)
+            if (dto.Attachments != null)
             {
-                foreach (var a in dto.PostAttachments)
+                foreach (var a in dto.Attachments)
                 {
                     var postAttachment = new PostAttachment();
                     postAttachment.AttachmentUrl = await _fileService.SaveFile(a, "Images");
@@ -105,6 +105,7 @@ namespace CMS.Infrastructure.Services.Posts
 
             return post.Id;
         }
+
 
 
         public async Task<UpdatePostDto> Get(int id)
@@ -119,7 +120,7 @@ namespace CMS.Infrastructure.Services.Posts
 
             if(post.Attachments != null)
             {
-                //dto.PostAttachments = _mapper.Map<List<PostAttachmentViewModel>>(post.Attachments);
+                dto.PostAttachments = _mapper.Map<List<PostAttachmentViewModel>>(post.Attachments);
             }
 
             return dto;

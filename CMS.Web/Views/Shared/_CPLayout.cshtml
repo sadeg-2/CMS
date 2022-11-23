@@ -1,14 +1,25 @@
 ﻿@{
-    //ViewBag.UserType = "Administrator";
-    //        //ViewBag.fullName = "Sadeg Ashour";
-    //ViewBag.fullName = "Sadeg Ashour";
-            
+    string Action = null;
+    string Controller = null;
+    string currentURL = null;
+    try
+    {
+        Action = ViewContext.RouteData.Values["action"].ToString().ToLower();
+        Controller = ViewContext.RouteData.Values["Controller"].ToString().ToLower();
+        currentURL = Controller + "/" + Action;
+
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
 }
+
 <html lang="en" direction="rtl" style="direction: rtl;">
 <head>
     <base href="../../../">
     <meta charset="utf-8" />
-    <title> Title </title>
+    <title>@ViewData["Title"] </title>
     <link rel="icon" href="~/title_logo.png"
           type="image/x-icon">ا
 
@@ -83,7 +94,7 @@
     </div>
     <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
         <a href="/">
-            <img alt="Logo" width="20%" src="~/ThemImages/cms-logo.png" />
+            <img alt="Logo" width="65%" src="~/ThemImages/cms-logo.png" />
         </a>
         <div class="d-flex align-items-center">
             <button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
@@ -127,7 +138,7 @@
                 <div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
                     <div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500">
                         <ul class="menu-nav">
-                            @if(ViewBag.UserType == "Administrator")
+                            @if (ViewBag.UserType == "Administrator")
                             {
                                 <li class="menu-item menu-item-active" aria-haspopup="true">
                                     <a href="~/Home/Index" class="menu-link">
@@ -140,13 +151,13 @@
                                                 </g>
                                             </svg><!--end::Svg Icon-->
                                         </span>
-                                        
                                         <span class="menu-text">الرئيسية </span>
                                     </a>
                                 </li>
+
                                 <li class="menu-item menu-item" aria-haspopup="true">
                                     <a href="~/User/Index" class="menu-link">
-                                        <span class="svg-icon svg-icon-primary svg-icon-2x" >
+                                        <span class="svg-icon svg-icon-primary svg-icon-2x">
                                             <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Files/User-folder.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                                     <rect x="0" y="0" width="24" height="24" />
@@ -159,6 +170,7 @@
                                         <span class="menu-text"> ادارة المستخدمين </span>
                                     </a>
                                 </li>
+
                                 <li class="menu-item menu-item" aria-haspopup="true">
                                     <a href="~/Category/Index" class="menu-link">
                                         <span class="svg-icon svg-icon-primary svg-icon-2x">
@@ -215,21 +227,13 @@
                                         <span class="menu-text"> ادارة الاعلانات </span>
                                     </a>
                                 </li>
-                                <li class="menu-item menu-item" aria-haspopup="true">
-                                    <a href="~/Advertisement/Index" class="menu-link">
-                                        <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo13/dist/../src/media/svg/icons/Media/Music.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"/>
-                                                <path d="M8,17.0400072 L8,8 C8,7.56261503 8.28424981,7.17598102 8.70172501,7.04552002 L17.701725,4.54552002 C18.3456556,4.34429171 19,4.82535976 19,5.5 L19,17 C19,17.0001911 18.9999999,17.0003822 18.9999998,17.0005733 C18.9996127,18.1048793 17.880473,19 16.5,19 C15.1192881,19 14,18.1045695 14,17 C14,15.8954305 15.1192881,15 16.5,15 C16.6712329,15 16.838445,15.0137721 17,15.0400072 L17,8 L10,9.875 L10,19 C10,19.0001911 9.99999995,19.0003822 9.99999984,19.0005733 C9.99961272,20.1048793 8.88047301,21 7.5,21 C6.11928813,21 5,20.1045695 5,19 C5,17.8954305 6.11928813,17 7.5,17 C7.67123292,17 7.83844503,17.0137721 8,17.0400072 Z" fill="#000000" fill-rule="nonzero"/>
-                                            </g>
-                                        </svg><!--end::Svg Icon--></span>
-                                        <span class="menu-text"> ادارة الموسيقى </span>
-                                    </a>
-                                </li>
-
                             }
                             else if (ViewBag.UserType == "ArticleAuthor")
                             {
+
+
+
+
                                 <li class="menu-item menu-item" aria-haspopup="true">
                                     <a href="~/Category/Index" class="menu-link">
                                         <span class="svg-icon svg-icon-primary svg-icon-2x">
@@ -258,9 +262,15 @@
                                         <span class="menu-text"> ادارة الاخبار </span>
                                     </a>
                                 </li>
+
+
                             }
                             else if (ViewBag.UserType == "TrackAdministrator")
                             {
+
+
+
+
                                 <li class="menu-item menu-item" aria-haspopup="true">
                                     <a href="~/Category/Index" class="menu-link">
                                         <span class="svg-icon svg-icon-primary svg-icon-2x">
@@ -290,7 +300,9 @@
                                     </a>
                                 </li>
 
+
                             }
+
                         </ul>
                     </div>
                 </div>
@@ -429,22 +441,30 @@
 
     <script type="module">
      
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-analytics.js";
+       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+
+       import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js";
 
 
         const firebaseConfig = {
-            apiKey: "AIzaSyCmCWruVV7F0y1cCwE_s93fXVJIcwRBnQ4",
-            authDomain: "cmsweb-b1aa8.firebaseapp.com",
-            projectId: "cmsweb-b1aa8",
-            storageBucket: "cmsweb-b1aa8.appspot.com",
-            messagingSenderId: "1020282346736",
-            appId: "1:1020282346736:web:d42de194e7442f9c91f635",
-            measurementId: "G-H7R0REYVQR"
+                apiKey: "AIzaSyBS2R4GRT5JAcmH32sCqOFC_er8_o7sx8E",
+
+                authDomain: "cmsweb-96ed9.firebaseapp.com",
+
+                projectId: "cmsweb-96ed9",
+
+                storageBucket: "cmsweb-96ed9.appspot.com",
+
+                messagingSenderId: "1023004862665",
+
+                appId: "1:1023004862665:web:76fd3b7147f8ad9c728518",
+
+                measurementId: "G-0WQ18RZ9Q2"
+
         };
 
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+        initializeApp(firebaseConfig);
 
         const messaging = firebase.messaging();
 
@@ -452,14 +472,14 @@
             return messaging.getToken();
         }).then(token => {
             console.log(token);
-            $.ajax({
-                url: "/User/AddFCM?fcm=" + token,
-                type: 'GET',
-                dataType: 'json',
-                success: function (res) {
-                    console.log(res);
-                }
-            });
+            //$.ajax({
+            //    url: "/User/AddFCM?fcm=" + token,
+            //    type: 'GET',
+            //    dataType: 'json',
+            //    success: function (res) {
+            //        console.log(res);
+            //    }
+            //});
         }).catch(err => {
 
         })
@@ -467,6 +487,55 @@
         messaging.onMessage(payload => {
             alert("ahmed");
         })
+    </script>
+
+    @* this my test *@
+    <script type="module">
+            import { initializeApp   } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js'
+            import { getMessaging } from "https://www.gstatic.com/firebasejs/4.2.0/firebase-messaging.js";
+
+
+            // If you enabled Analytics in your project, add the Firebase SDK for Google Analytics
+            import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js'
+
+            // Add Firebase products that you want to use
+            import { getAuth } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js'
+            import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js'
+            const firebaseConfig = {
+                apiKey: "AIzaSyBS2R4GRT5JAcmH32sCqOFC_er8_o7sx8E",
+                authDomain: "cmsweb-96ed9.firebaseapp.com",
+                projectId: "cmsweb-96ed9",
+                storageBucket: "cmsweb-96ed9.appspot.com",
+                messagingSenderId: "1023004862665",
+                appId: "1:1023004862665:web:76fd3b7147f8ad9c728518",
+                measurementId: "G-0WQ18RZ9Q2"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+
+            
+            const messaging = getMessaging(app);
+
+            messaging.requestPermission().then(() => {
+                      return messaging.getToken();
+            }).then(token => {
+            console.log(token);
+                //$.ajax({
+                //    url: "/User/AddFCM?fcm=" + token,
+                //    type: 'GET',
+                //    dataType: 'json',
+                //    success: function (res) {
+                //        console.log(res);
+                //    }
+                //});
+            }).catch(err => {
+
+            })
+
+           
+
+
     </script>
 
 

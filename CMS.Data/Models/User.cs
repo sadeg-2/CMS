@@ -20,6 +20,8 @@ namespace CMS.Data.Models
 
         public UserType UserType { get; set; }
 
+        public string FCMToken { get; set; }
+
         public bool IsDelete { get; set; }
 
         public DateTime CreatedAt { get; set; }

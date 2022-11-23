@@ -13,11 +13,25 @@ namespace CMS.Web.Controllers
         public UserController(IUserService userService) : base(userService)
         {
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ExportToExcel()
+        {
+            return File(await _userService.ExportToExcel(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "report.xlsx");
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
             _userService.g();
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddFCM(string fcm)
+        {
+            await _userService.SetFCMToUser(userId, fcm);
+            return Ok("Updated FCM User");
         }
 
         public async Task<JsonResult> GetUserData(Pagination pagination , Query query)

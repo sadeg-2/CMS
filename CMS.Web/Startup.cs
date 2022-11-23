@@ -8,6 +8,8 @@ using CMS.Infrastructure.Services.Categories;
 using CMS.Infrastructure.Services.Posts;
 using CMS.Infrastructure.Services.Tracks;
 using CMS.Infrastructure.Services.Users;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.IO;
 
 namespace CMS.Web
 {
@@ -105,6 +108,12 @@ namespace CMS.Web
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            FirebaseApp.Create(new AppOptions()
+            {
+                Credential = GoogleCredential.FromFile(Path.Combine(env.WebRootPath, "cmsweb-96ed9-firebase-adminsdk-79yc7-15e93523f8.json")),
+            });
+
         }
     }
 }
